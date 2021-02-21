@@ -1,4 +1,4 @@
 module.exports = {
-  appId: '此处填写小程序的appid',
-  appSecret: '此处填写小程序的secret'
+  appId: 'wxf395ae588532f918',
+  appSecret: '21374cc5f5a2c757fd457537b579e7a7'
 }

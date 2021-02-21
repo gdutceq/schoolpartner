@@ -1,8 +1,8 @@
 module.exports = {
   host: 'localhost',
   user: 'root',
-  password: '此处填写数据库密码',
-  database: '此处填写数据库名',
+  password: '123456',
+  database: 'school_partner',
   port: 3306,
-  charset: 'utf8mb4' // 支持emoji存储
+  // charset: 'utf8mb4' // 支持emoji存储
 }

@@ -26,7 +26,9 @@ router.get('/exercises', async (ctx) => {
     const {
       classId
     } = getJWTPayload(authorization)
+    console.log(QUERY_TABLE('exercise_list', ['class_id', classId]))
     const res = await query(QUERY_TABLE('exercise_list', ['class_id', classId]));
+    console.log(res)
     res.map((item, index) => {
       const {
         id,

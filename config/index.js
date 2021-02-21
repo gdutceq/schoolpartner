@@ -7,6 +7,7 @@ const config = {
     750: 1,
     828: 1.81 / 2
   },
+  framework: 'react',
   plugins: [
     '@tarojs/plugin-sass',
   ],
