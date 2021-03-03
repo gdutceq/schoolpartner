@@ -5,7 +5,7 @@ import { AtSearchBar } from 'taro-ui'
 import { inject, observer } from '@tarojs/mobx'
 
 import { CourseInfo } from '../../modals/courseList'
-import courseStore from '../../../store/courseStore'
+import courseStore from '../../store/courseStore'
 
 import './index.scss'
 

@@ -31,6 +31,7 @@ class List extends Component<IProps, IState> {
   }
 
   render() {
+    // 嵌套结构的对象解构赋值
     const { studyStore: { hotExerciseList }, exerciseStore: { getExerciseDetail } } = this.props
 
     return hotExerciseList && hotExerciseList.slice().length !== 0 ? (

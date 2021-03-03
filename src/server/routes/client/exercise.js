@@ -131,6 +131,7 @@ router.get('/exercises-rank', async (ctx) => {
       }
     })
   };
+  // console.log(ctx.response.body)
 })
 
 module.exports = router

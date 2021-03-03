@@ -23,7 +23,7 @@ class PersonalInfo extends Component<IProps, {}> {
           <Image className='avatar' src={avatarUrl} lazyLoad></Image>
           <View className='nickname'>
             <View>{nickName}</View>
-            <View className='tag'>北京师范大学珠海分校的一名小菜鸡</View>
+            <View className='tag'>广东工业大学计算机学院</View>
           </View>
           <View className='status'>
             <View className='status-wrap'>

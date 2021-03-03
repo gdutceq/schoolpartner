@@ -2,7 +2,7 @@ import React from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { Provider } from '@tarojs/mobx'
 import Index from './pages/index/index'
-
+// 采用mobx进行状态管理
 import store from './store/index'
 
 import './app.scss'

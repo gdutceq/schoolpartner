@@ -46,17 +46,17 @@ class RankList extends Component<IProps, IState>{
   }
 
   render() {
-    // const { rankList } = this.state
-    const rankList = [
-      { studentAvatar: 'http://cdn.algbb.cn/emoji/32.png', nickName: 'Tom Mark', count: 13122 },
-      { studentAvatar: 'http://cdn.algbb.cn/emoji/31.png', nickName: 'Bruce Alex', count: 23124 },
-      { studentAvatar: 'http://cdn.algbb.cn/emoji/30.png', nickName: 'Chirs Ford', count: 45631 },
-      { studentAvatar: 'http://cdn.algbb.cn/emoji/29.png', nickName: 'Ben Dick', count: 16341 },
-      { studentAvatar: 'http://cdn.algbb.cn/emoji/28.png', nickName: 'Martin Hugo', count: 23145 },
-      { studentAvatar: 'http://cdn.algbb.cn/emoji/27.png', nickName: 'Lee Oliver', count: 34123 },
-      { studentAvatar: 'http://cdn.algbb.cn/emoji/26.png', nickName: 'Mark Rex', count: 56142 }
-    ]
-
+    const { rankList } = this.state
+    // const rankList = [
+    //   { studentAvatar: 'http://cdn.algbb.cn/emoji/32.png', nickName: 'Tom Mark', studentName: 'Tom Mark', total: 13122 },
+    //   { studentAvatar: 'http://cdn.algbb.cn/emoji/31.png', nickName: 'Bruce Alex', studentName: 'Bruce Alex', total: 23124 },
+    //   { studentAvatar: 'http://cdn.algbb.cn/emoji/30.png', nickName: 'Chirs Ford', studentName: 'Chirs Ford', total: 45631 },
+    //   { studentAvatar: 'http://cdn.algbb.cn/emoji/29.png', nickName: 'Ben Dick', studentName: 'Ben Dick', total: 16341 },
+    //   { studentAvatar: 'http://cdn.algbb.cn/emoji/28.png', nickName: 'Martin Hugo', studentName: 'Martin Hugo', total: 23145 },
+    //   { studentAvatar: 'http://cdn.algbb.cn/emoji/27.png', nickName: 'Lee Oliver', studentName: 'Lee Oliver', total: 34123 },
+    //   { studentAvatar: 'http://cdn.algbb.cn/emoji/26.png', nickName: 'Mark Rex', studentName: 'Mark Rex', total: 56142 }
+    // ]
+    console.log(rankList)
     return (
       <View className="rank-list__container">
         <View className="rank-list__background" />
@@ -67,7 +67,7 @@ class RankList extends Component<IProps, IState>{
             <View className="name">{rankList[0].nickName}</View>
             <View className="realname">
               <Text>({rankList[0].nickName})</Text>
-              <View className="score">{rankList[0].count}</View>
+              <View className="score">{rankList[0].total}</View>
             </View>
           </View>
         </View>
@@ -78,7 +78,7 @@ class RankList extends Component<IProps, IState>{
         </View> */}
 
         {rankList.slice(1).map((rank, index) => {
-          const { studentAvatar, nickName, count } = rank
+          const { studentAvatar, nickName, total } = rank
           return (
             <View className="rank-list__wrap" key={index}>
               <View className="number">{index + 2}</View>
@@ -89,7 +89,7 @@ class RankList extends Component<IProps, IState>{
                   ({nickName})
                 </View>
               </View>
-              <View className="score">{count}</View>
+              <View className="score">{total}</View>
             </View>
           )
         })}

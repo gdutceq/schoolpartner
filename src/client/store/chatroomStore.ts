@@ -126,6 +126,8 @@ class chatroomStore {
   }
 
   async setMessageList(contacts: ContactsInfo[]): Promise<any> {
+    console.log(contacts)
+    // debugger
     await Promise.all(contacts.map(async contactInfo => {
       const { contactsId } = contactInfo
       const { data } = await Taro.request({
