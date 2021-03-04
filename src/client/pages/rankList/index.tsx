@@ -56,7 +56,7 @@ class RankList extends Component<IProps, IState>{
     //   { studentAvatar: 'http://cdn.algbb.cn/emoji/27.png', nickName: 'Lee Oliver', studentName: 'Lee Oliver', total: 34123 },
     //   { studentAvatar: 'http://cdn.algbb.cn/emoji/26.png', nickName: 'Mark Rex', studentName: 'Mark Rex', total: 56142 }
     // ]
-    console.log(rankList)
+    // console.log(rankList)
     return (
       <View className="rank-list__container">
         <View className="rank-list__background" />

@@ -66,6 +66,7 @@ router.get('/exercises/:id', async (ctx) => {
   }
 })
 
+// 做题统计总分
 router.put('/exercises/score', async (ctx) => {
   const body = ctx.request.body
   const {
@@ -74,14 +75,17 @@ router.put('/exercises/score', async (ctx) => {
     exerciseId
   } = body
 
+  // console.log(body)
   try {
     const studentInfo = await query(`SELECT id, student_name, nick_name FROM student_list WHERE open_id = '${openid}'`)
+    // console.log(studentInfo)
     const {
       id = 0
     } = studentInfo[0] || []
 
-    const record = await query(`SELECT id FROM exercise_score WHERE exercise_id = ${exerciseId} AND student_id = ${id}`)
+    const record = await query(`SELECT * FROM exercise_score WHERE exercise_id = ${exerciseId} AND student_id = ${id}`)
     const isRecordExist = record.length !== 0
+    // console.log(isRecordExist)
 
     if (isRecordExist) {
       await query(`UPDATE exercise_score SET student_score = ${score} WHERE exercise_id = ${exerciseId} AND student_id = ${id}`)
@@ -108,8 +112,9 @@ router.put('/exercises/score', async (ctx) => {
   }
 })
 
+// 做题总和分数排名
 router.get('/exercises-rank', async (ctx) => {
-  const res = await query(`SELECT count(exercise_id) as count, sum(student_score) as total, student_id, student_name, nick_name, student_avatar FROM exercise_score left join student_list on exercise_score.student_id = student_list.id GROUP BY student_id ORDER BY count DESC`)
+  const res = await query(`SELECT count(exercise_id) as count, sum(student_score) as total, student_id, student_name, nick_name, student_avatar FROM exercise_score left join student_list on exercise_score.student_id = student_list.id GROUP BY student_id ORDER BY total DESC`)
   ctx.response.body = {
     rankList: res.map(item => {
       const {
@@ -131,7 +136,7 @@ router.get('/exercises-rank', async (ctx) => {
       }
     })
   };
-  // console.log(ctx.response.body)
+  console.log(ctx.response.body)
 })
 
 module.exports = router
