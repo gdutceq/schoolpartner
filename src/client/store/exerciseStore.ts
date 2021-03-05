@@ -102,6 +102,7 @@ class exerciseStore {
     this.currentPage = current;
   }
 
+  // 答题时点击每一个选项
   @action.bound
   handleOptionClick(number: number, index: number): void {
     if (this.isSubmitted) return
@@ -110,10 +111,12 @@ class exerciseStore {
     }
     this.optionStatus[number][index] = this.optionStatus[number][index] === 1 ? 0 : 1
     this.emptyPage = this.optionStatus.findIndex((answer) => answer.every(option => option === 0));
+    debugger
     this.isFinished = this.emptyPage === -1
 
   }
 
+  // 提交答案
   @action.bound
   handleConfirmClick(): void {
     if (this.isSubmitted) return

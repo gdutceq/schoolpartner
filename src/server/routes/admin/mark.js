@@ -52,6 +52,7 @@ router.get('/mark/paper/getExercises', async (ctx) => {
 })
 
 router.get('/mark/paper', async (ctx) => {
+  // console.log(ctx.request.query)
   try {
     const {
       authorization
@@ -63,8 +64,9 @@ router.get('/mark/paper', async (ctx) => {
       exerciseId,
       exerciseIndex
     } = ctx.request.query
-    const res = await query(`SELECT * FROM student_list WHERE id IN (SELECT student_id FROM upload_exercise WHERE class_id = '${classId}' AND exercise_id = '${exerciseId}' AND exercise_index = '${exerciseIndex}')`);
-
+    // console.log(classId, exerciseId, exerciseIndex)
+    const res = await query(`SELECT * FROM student_list WHERE student_id IN (SELECT student_id FROM upload_exercise WHERE class_id = '${classId}' AND exercise_id = '${exerciseId}' AND exercise_index = '${exerciseIndex}')`);
+  
     ctx.response.status = 200
     ctx.response.body = {
       exerciseId: +exerciseId,
@@ -95,6 +97,22 @@ router.get('/mark/paper', async (ctx) => {
     ctx.response.body = {
       msg: '异常错误'
     }
+  }
+})
+
+// 获取图片
+router.get('/mark/img', async (ctx) => {
+  console.log(ctx.request.query)
+  const {
+    classId,
+    exerciseId,
+    // studentId,
+    exerciseIndex
+  } = ctx.request.query
+  const imgName = await query(`SELECT file_name FROM upload_exercise WHERE class_id = '${classId}' AND exercise_id = '${exerciseId}' AND exercise_index = '${exerciseIndex}'`)
+  ctx.response.status = 200
+  ctx.response.body = {
+    imgName
   }
 })
 

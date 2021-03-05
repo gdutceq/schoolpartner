@@ -25,6 +25,7 @@ import {
 import { prefix } from '@/admin/utils/common'
 import { SelectValue } from 'antd/lib/select';
 import http from '@/admin/utils/http'
+import path from 'path'
 const { Option } = Select;
 
 type MarkPaperProps = RouteComponentProps & FormComponentProps
@@ -446,8 +447,14 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
 
   const handleExerciseStudentChange = async (value: SelectValue) => {
     // const data = exerciseStudentList.filter(item => item.studentId === +value)
-    const imgPath = `http://cdn.algbb.cn/uploadImage/exercise/${classId}/${exerciseId}/${exerciseIndex}/${value}.png`
-    setFillImageSrc(imgPath)
+    // const imgPath = `http://cdn.algbb.cn/uploadImage/exercise/${classId}/${exerciseId}/${exerciseIndex}/${value}.png`
+    const {imgName} = await http.get(`${prefix}/mark/img?exerciseId=${exerciseId}&exerciseIndex=${exerciseIndex}&classId=${classId}`)
+    if(imgName.length) {
+      const imgPath = path.join(__dirname,'../../../../public/upload') + `/${imgName[0].file_name}`
+      debugger
+      console.log(imgPath)
+      setFillImageSrc(imgPath)
+    }
   }
 
   return (
