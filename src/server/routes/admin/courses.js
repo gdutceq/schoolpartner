@@ -73,6 +73,7 @@ router.get('/courses/:id', async (ctx) => {
   }
 })
 
+// 新增课程
 router.post('/courses', async (ctx) => {
   const responseBody = {
     code: 0,

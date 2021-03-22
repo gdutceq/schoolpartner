@@ -7,6 +7,7 @@ const ExerciseList = LoadableComponent(() => import('./ExerciseList'))
 const ExercisePublish = LoadableComponent(() => import('./ExercisePublish'))
 const ExerciseModify = LoadableComponent(() => import('./ExerciseModify'))
 const CourseList = LoadableComponent(() => import('./CourseList'))
+const ResourceList = LoadableComponent(() => import('./ResourceList'))
 const CoursePublish = LoadableComponent(() => import('./CoursePublish'))
 const CourseModify = LoadableComponent(() => import('./CourseModify'))
 const ExamList = LoadableComponent(() => import('./ExamList'))
@@ -23,6 +24,7 @@ export {
   ExercisePublish,
   ExerciseModify,
   CourseList,
+  ResourceList,
   CoursePublish,
   CourseModify,
   ExamList,

@@ -12,6 +12,7 @@ import {
   ExercisePublish,
   ExerciseModify,
   CourseList,
+  ResourceList,
   CoursePublish,
   CourseModify,
   ExamList,
@@ -35,6 +36,7 @@ const ContentMain: FC<RouteComponentProps> = () => {
         <RestrictRoute exact path="/admin/content/exercise-publish" component={ExercisePublish} />
         <RestrictRoute exact path="/admin/content/exercise-modify/:id" component={ExerciseModify} />
         <RestrictRoute exact path="/admin/content/course-list/" component={CourseList} />
+        <RestrictRoute exact path="/admin/content/resource-list/" component={ResourceList} />
         <RestrictRoute exact path="/admin/content/course-publish/" component={CoursePublish} />
         <RestrictRoute exact path="/admin/content/course-modify/:id/" component={CourseModify} />
         <RestrictRoute exact path="/admin/content/exam-list/" component={ExamList} />

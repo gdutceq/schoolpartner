@@ -60,6 +60,9 @@ const SiderNav: FC<RouteComponentProps> = (props: RouteComponentProps) => {
           <Menu.Item key="/admin/content/course-list">
             <Link to="/admin/content/course-list">课程管理</Link>
           </Menu.Item>
+          <Menu.Item key="/admin/content/resource-list">
+            <Link to="/admin/content/resource-list">资料管理</Link>
+          </Menu.Item>
           <Menu.Item key="/admin/content/exam-list">
             <Link to="/admin/content/exam-list">考试管理</Link>
           </Menu.Item>
@@ -79,7 +82,7 @@ const SiderNav: FC<RouteComponentProps> = (props: RouteComponentProps) => {
           <Menu.Item key="/admin/class/class-dashboard">
             <Link to="/admin/class/class-dashboard">班级管理</Link>
           </Menu.Item>
-          <Menu.Item key="1">
+          {/* <Menu.Item key="1">
             <Link to="/#">1</Link>
           </Menu.Item>
           <Menu.Item key="2">
@@ -87,9 +90,9 @@ const SiderNav: FC<RouteComponentProps> = (props: RouteComponentProps) => {
           </Menu.Item>
           <Menu.Item key="3">
             <Link to="/#">3</Link>
-          </Menu.Item>
+          </Menu.Item> */}
         </SubMenu>
-        <SubMenu
+        {/* <SubMenu
           key="sub3"
           title={
             <span>
@@ -102,7 +105,7 @@ const SiderNav: FC<RouteComponentProps> = (props: RouteComponentProps) => {
           <Menu.Item key="10">option10</Menu.Item>
           <Menu.Item key="11">option11</Menu.Item>
           <Menu.Item key="12">option12</Menu.Item>
-        </SubMenu>
+        </SubMenu> */}
       </Menu>
     </Sider>
   )

@@ -26,7 +26,7 @@ router.post('/upload', async (ctx) => {
    // 创建可读流
    const reader = fs.createReadStream(file.path);
    let filePath = path.join(__dirname, '../../../../public/upload') + `/${file.name}`;
-   console.log(filePath)
+  //  console.log(filePath)
    // 创建可写流
    const upStream = fs.createWriteStream(filePath);
    // 可读流通过管道写入可写流

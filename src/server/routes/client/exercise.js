@@ -114,7 +114,7 @@ router.put('/exercises/score', async (ctx) => {
 
 // 做题总和分数排名
 router.get('/exercises-rank', async (ctx) => {
-  const res = await query(`SELECT count(exercise_id) as count, sum(student_score) as total, student_id, student_name, nick_name, student_avatar FROM exercise_score left join student_list on exercise_score.student_id = student_list.id GROUP BY student_id ORDER BY total DESC`)
+  const res = await query(`SELECT count(exercise_id) as count, sum(student_score) as total, student_list.student_id, student_name, nick_name, student_avatar FROM exercise_score left join student_list on exercise_score.student_id = student_list.student_id GROUP BY student_id ORDER BY total DESC`)
   ctx.response.body = {
     rankList: res.map(item => {
       const {
