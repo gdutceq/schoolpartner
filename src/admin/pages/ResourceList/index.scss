@@ -26,3 +26,22 @@
     }
   }
 }
+.upload-modal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .upload-container {
+    width: 200px;
+    height:200px;
+    text-align: center;
+    background: #e8e8e8;
+    border-radius: 5px;
+    .upload-icon {
+      width: 150px;
+      height:150px;
+    }
+  } 
+  .select-course {
+
+  }
+}

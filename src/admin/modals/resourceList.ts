@@ -5,5 +5,6 @@ export interface ResourceList{
   resourceType: string,
   resourceSize: string,
   resourceAuthor: string,
-  courseId: string,
+  courseId: number,
+  courseName: string
 }

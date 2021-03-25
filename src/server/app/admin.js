@@ -18,6 +18,7 @@ const {
   register,
   exercises,
   courses,
+  resource,
   exams,
   classes,
   tags,
@@ -28,6 +29,8 @@ const {
 // 文件上传
 admin.use(body({
   multipart: true,
+  // strict 参数:如果启用，则不解析GET，HEAD，DELETE请求，默认为true
+  strict:false,//设为false
   formidable: {
     multipart: true
   }
@@ -45,6 +48,7 @@ admin.use(routes(router, {
   register,
   exercises,
   courses,
+  resource,
   exams,
   classes,
   tags,

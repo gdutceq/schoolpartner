@@ -4,6 +4,7 @@ const { QUERY_TABLE, INSERT_TABLE, UPDATE_TABLE_MULTI } = require('../../utils/s
 const { getJWTPayload } = require('../../utils/token')
 const parse = require('../../utils/parse')
 
+// 获取课程列表
 router.get('/courses', async (ctx) => {
   const responseData = []
   const responseBody = {

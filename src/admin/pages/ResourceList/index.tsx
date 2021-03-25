@@ -1,12 +1,16 @@
 import React, { FC, useState, useEffect, ChangeEvent } from 'react'
-import { Table, Button, Popconfirm, Modal, Input, Empty, message, Upload } from 'antd';
+import { Table, Button, Popconfirm, Modal, Input, Empty, message, Upload, Select } from 'antd';
+const { Option } = Select;
 import { ColumnProps } from 'antd/es/table'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { CustomBreadcrumb } from '@/admin/components'
 import { ResourceList } from '@/admin/modals/ResourceList'
+import { CourseList } from '@/admin/modals/CourseList'
 import { FetchConfig } from '@/admin/modals/http'
 import { useService } from '@/admin/hooks'
 import http from '@/admin/utils/http'
+import { observer } from 'mobx-react'
+import { useStore } from '@/admin/hooks/useStore'
 
 import './index.scss'
 
@@ -22,77 +26,6 @@ const CourseList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
   })
   const [fetchFlag, setFetchFlag] = useState<number>(0)
   const hasSelected: boolean = selectedRowKeys.length > 0
-  const { history } = props
-
-  useEffect(() => {
-    // 获取课程列表
-    const courseFetchConfig: FetchConfig = {
-      url: '/courses',
-      method: 'GET',
-      params: {},
-      config: {}
-    }
-    setCourCeFetchConfig(Object.assign({}, courseFetchConfig))
-  }, [fetchFlag])
-
-  useEffect(() => {
-    // 获取资源列表
-    const resourcefetchConfig: FetchConfig = {
-      url: '/resource',
-      method: 'GET',
-      params: {},
-      config: {}
-    }
-    setResourceFetchConfig(Object.assign({}, resourcefetchConfig))
-  }, [fetchFlag])
-  
-  const handleSelectedChange = (selectedRowKeys: number[]) => {
-    setSelectedRowKeys(selectedRowKeys)
-  }
-
-  const handleSearchChange = (changeEvent: ChangeEvent<HTMLInputElement>) => {
-    const { target: { value } } = changeEvent
-    setSearchValue(value)
-  }
-
-  const handleEditClick = (courseId: number) => {
-    history.push(`/admin/content/course-modify/${courseId}`)
-  }
-
-  const handleDeleteClick = async (courseId: number) => {
-    const { data: { msg } } = await http.delete(`/courses/${courseId}`)
-    setFetchFlag(fetchFlag + 1)
-    setSelectedRowKeys([])
-    message.success(msg)
-  }
-
-  const handleBatchDelete = async () => {
-    const { data: { msg } } = await http.delete(`/courses`, {
-      data: selectedRowKeys
-    })
-    setFetchFlag(fetchFlag + 1)
-    setSelectedRowKeys([])
-    message.success(msg)
-  }
-
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: handleSelectedChange,
-  }
-
-  // 弹框
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false)
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  const showUploadModal = () => {
-    setIsModalVisible(true);
-  };
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
-
 
   const columns: ColumnProps<ResourceList>[] = [
     {
@@ -131,13 +64,13 @@ const CourseList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
     },
     {
       title: '所属课程',
-      dataIndex: 'courseId',
-      key: 'courseId',
+      dataIndex: 'courseName',
+      key: 'courseName',
       width: 120,
-      // filteredValue: [searchValue],
-      // onFilter: (_, row) => (
-      //   row.resourceName.toString().indexOf(searchValue) !== -1
-      // )
+      filteredValue: [searchValue],
+      onFilter: (_, row) => (
+        row.courseName.toString().indexOf(searchValue) !== -1
+      )
     }, {
       title: '操作',
       dataIndex: '',
@@ -145,9 +78,6 @@ const CourseList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
       width: 180,
       render: (_, row) => (
         <span>
-          <Button
-            type="primary"
-            onClick={() => handleEditClick(row.id)}>编辑</Button>
           <Popconfirm
             title="确定删除此资料吗?"
             onConfirm={() => handleDeleteClick(row.id)}
@@ -160,12 +90,143 @@ const CourseList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
       )
     }
   ]
+
+  useEffect(() => {
+    // 获取课程列表
+    const courseFetchConfig: FetchConfig = {
+      url: '/courses',
+      method: 'GET',
+      params: {},
+      config: {}
+    }
+    setCourCeFetchConfig(Object.assign({}, courseFetchConfig))
+  }, [fetchFlag])
+
+  useEffect(() => {
+    // 获取资源列表
+    const resourcefetchConfig: FetchConfig = {
+      url: '/resource',
+      method: 'GET',
+      params: {},
+      config: {}
+    }
+    setResourceFetchConfig(Object.assign({}, resourcefetchConfig))
+  }, [fetchFlag])
+  
+  // 选中行数
+  const handleSelectedChange = (selectedRowKeys: number[]) => {
+    console.log(selectedRowKeys)
+    setSelectedRowKeys(selectedRowKeys)
+  }
+
+  const handleSearchChange = (changeEvent: ChangeEvent<HTMLInputElement>) => {
+    const { target: { value } } = changeEvent
+    setSearchValue(value)
+  }
+
+  // 删除单条
+  const handleDeleteClick = async (resourceId: number) => {
+    const { data: { msg } } = await http.delete(`/resource/${resourceId}`)
+    setFetchFlag(fetchFlag + 1)
+    setSelectedRowKeys([])
+    message.success(msg)
+  }
+
+  // 批量删除
+  const handleBatchDelete = async () => {
+    console.log(selectedRowKeys)
+    const { data: { msg } } = await http.delete(`/resource`, {
+      data: selectedRowKeys
+    })
+    setFetchFlag(fetchFlag + 1)
+    setSelectedRowKeys([])
+    message.success(msg)
+  }
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: handleSelectedChange,
+  }
+
   // 获取资料列表
-  // const { isLoading = false, response } = useService(resourcefetchConfig)
+  const resourceRes = useService(resourcefetchConfig)?.response
+  const dataRes = resourceRes?.data || {}
+  const { resourceList = [], total: totalPage = 0 } = dataRes
+
   // 获取课程
   const { isLoading = false, response } = useService(coursefetchConfig)
   const { data = {} } = response || {}
-  const { courseList = [], total: totalPage = 0 } = data
+  const { courseList = [] } = data
+
+  // 选取相关课程
+  const [selectId, setSelectId] = useState('')
+  const handleChange = (value: string) => {
+    console.log(`selected ${value}`);
+    setSelectId(value)
+  }
+
+  // 手动上传文件
+  const [fileList, setFileList] = useState<UploadFile[]>([])
+  const uploadProps = {
+    onRemove: (file) => {
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+      setFileList(newFileList)
+    },
+    beforeUpload:  (file) => {
+      setFileList([...fileList, file])
+      return false;
+    },
+    fileList,
+  }
+
+   // 弹框
+   const [isModalVisible, setIsModalVisible] = useState<boolean>(false)
+   const [confirmLoading, setConfirmLoading] = useState(false)
+   // 获取用户名
+   const { userInfoStore } = useStore()
+   const { username } = userInfoStore
+   const destroyOnClose = true
+   const showUploadModal = () => {
+     setIsModalVisible(true);
+   };
+
+   // 确认上传文件
+   const handleOk = async() => {
+     console.log(fileList)
+     const formData = new FormData();
+     fileList.forEach(file => {
+       formData.append('file', file);
+     });
+
+     // 获取课程名
+     const selectCourseName = () => {
+      for(let course of courseList) {
+        if (course.id == Number(selectId)) {
+          return course.courseName
+        }
+      }
+    }
+
+     formData.append('course_id', selectId)
+     formData.append('course_name', selectCourseName())
+     formData.append('publish_date',(new Date().getTime()).toString())
+     formData.append('resource_author', username)
+    //  console.log(formData)
+     const {data: { msg }} = await http.post('/resource/upload', formData)
+     setFetchFlag(fetchFlag + 1)
+     setSelectedRowKeys([])
+     message.success(msg)
+
+     setIsModalVisible(false);
+     setSelectId('')
+   };
+   const handleCancel = () => {
+     setIsModalVisible(false);
+     setSelectId('')
+   };
+
   return (
     <div>
       <CustomBreadcrumb list={['内容管理', '资料管理']} />
@@ -191,7 +252,7 @@ const CourseList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
         </div>
         <Table
           rowSelection={rowSelection}
-          dataSource={courseList}
+          dataSource={resourceList}
           columns={columns}
           rowKey="id"
           scroll={{
@@ -215,18 +276,34 @@ const CourseList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
           }}
         />
       </div>
-      <Modal title="Basic Modal" 
+      <Modal title="上传资料" 
         visible={isModalVisible} 
         onOk={handleOk} 
         onCancel={handleCancel}
         confirmLoading={confirmLoading}
+        destroyOnClose={destroyOnClose}
         >
-        <Upload>
-          <img src=""></img>
-        </Upload>
+        <div className="upload-modal">
+        <div className='select-course'>
+            <p>请先选择所属课程</p>
+            <Select style={{ width: 120 }} onChange={handleChange}>
+              {
+                courseList.map((course:CourseList) => 
+                  <Option key={course.id} value={course.id}>{course.courseName}</Option>
+                )
+              }
+            </Select>
+          </div>
+          {
+            selectId?<Upload {...uploadProps} className='upload-container'>
+              <img className='upload-icon' src="../../../../public/img/upload.png"></img>
+              <p>点击上传文件</p>
+            </Upload> : <p></p>
+          }
+        </div>
       </Modal>
     </div>
   )
 }
 
-export default withRouter(CourseList)
+export default withRouter(observer(CourseList))
