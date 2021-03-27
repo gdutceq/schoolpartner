@@ -91,6 +91,7 @@
         }
 
         &__content {
+          font-size: 0.8em;
           padding: 1em;
           color: #888;
           border-radius: 20px;
@@ -124,8 +125,8 @@
         }
 
         &__icon {
-          width: 100px;
-          height: 100px;
+          width: 80px;
+          height: 80px;
           margin: 2vw 3vw;
           border-radius: 50%;
         }
@@ -139,12 +140,12 @@
         }
 
         &__name {
-          color: #888;
-          font-size: 1.2em;
+          // color: #888;
+          font-size: 1em;
         }
 
         &__description {
-          color: #999;
+          color: #888;
           font-size: 0.8em;
         }
 
@@ -156,6 +157,64 @@
       }
     }
 
+    &__file {
+      padding: 0 1em;
+      background: #fff;
+
+      .file {
+        &-container {
+          margin: 1vw;
+          border-radius: 20px;
+          // box-shadow: 0 5px 20px 5px #d7d7d7;
+        }
+
+        &-title {
+          padding: 5vw 0;
+          color: #666;
+          font-size: 1.2em;
+          font-weight: bold;
+        }
+
+        &-wrap {
+          display: flex;
+          align-items: center;
+          border-bottom: #d7d7d7 1px solid;
+        }
+
+        &-path-icon {
+          width: 60px;
+          height: 60px;
+          margin: 2vw 3vw 2vw 0;
+          // border-radius: 50%;
+        }
+
+        &-info {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-evenly;
+          flex-grow: 1;
+          height: 100px;
+        }
+
+        &-name {
+          // color: #888;
+          font-size: 1em;
+        }
+
+        &-description {
+          color: #888;
+          font-size: 0.8em;
+        }
+
+        &-btn {
+          background-color: #3ca2f9;
+          padding: 2vw 3vw;
+          color: white;
+          font-size: 0.8em;
+          border-radius: 10px;
+        }
+      }
+    }
     &__video{
       display: flex;
       justify-content: center;

@@ -7,6 +7,8 @@ import { observer, inject } from '@tarojs/mobx'
 import courseStore from '../../store/courseStore'
 
 import './index.scss'
+import filePathIcon from '../../../../public/img/file-icon.png'
+import path from 'path'
 
 interface IProps {
   courseStore: courseStore
@@ -30,6 +32,22 @@ class CourseDetail extends Component<IProps, IState> {
   async componentWillMount() {
   }
 
+  handleDownloadFile(fileName: string) {
+    const filePath = `F:/ceq/前端/毕设/代码/School-Partners/public/resource-upload`+`/${fileName}`
+    console.log(filePath)
+    Taro.downloadFile({
+      url: filePath, //仅为示例，并非真实的资源
+      success: function (res) {
+        // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+        if (res.statusCode === 200) {
+          debugger
+          Taro.playVoice({
+            filePath: res.tempFilePath
+          })
+        }
+      }
+    })
+  }
   handleVideoClick() {
     Taro.navigateTo({
       url: `/pages/courseVideo/index`
@@ -38,7 +56,7 @@ class CourseDetail extends Component<IProps, IState> {
 
   render() {
     const { courseStore: { courseDetail } } = this.props
-    const { courseAuthor, publishDate, courseViews, courseDescription, courseSteps, courseRate } = courseDetail
+    const { courseAuthor, publishDate, courseViews, courseDescription, courseSteps, courseRate, fileLists } = courseDetail
     return (
       <View className='course'>
         <View className='course-background' />
@@ -84,6 +102,27 @@ class CourseDetail extends Component<IProps, IState> {
                   </View>
                 )
               })}
+            </View>
+          </View>
+          <View className='course-container__file'>
+            <View className='file-title'>
+              课程相关资料
+            </View>
+            <View className='file-container'>
+              {
+                fileLists.map((item: any) => {
+                  return (
+                    <View className='file-wrap'>
+                      <Image src={filePathIcon} className='file-path-icon'/>
+                      <View className='file-info'>
+                        <View className='file-name'>{item.resource_name}</View>
+                        <View className='file-description'>{item.resource_author} {item.resource_size} {new Date(item.publish_date).toLocaleDateString()}</View>
+                      </View>
+                      <View className='file-btn' onClick={() => { this.handleDownloadFile(item.resource_name) }}>下载</View>
+                    </View>
+                  )
+                })
+              }
             </View>
           </View>
           <View className="course-container__video" onClick={this.handleVideoClick}>播放课程视频</View>

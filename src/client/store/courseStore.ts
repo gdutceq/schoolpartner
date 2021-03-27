@@ -10,7 +10,8 @@ class courseStore {
     courseViews: 0,
     courseDescription: '',
     courseSteps: [],
-    courseRate: 0
+    courseRate: 0,
+    fileLists: []
   }
 
   @action.bound
@@ -24,6 +25,13 @@ class courseStore {
         method: 'GET',
       })
       this.courseDetail = data
+
+      const fileLists = await Taro.request({
+        url: `http://localhost:3000/resource/${id}`,
+        method: 'GET'
+      })
+      this.courseDetail.fileLists = fileLists.data
+
       await Taro.navigateTo({
         url: `/pages/courseDetail/index`
       })

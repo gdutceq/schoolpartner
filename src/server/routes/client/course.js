@@ -17,6 +17,7 @@ router.get('/courses', async (ctx) => {
   ctx.response.body = parse(response);
 })
 
+// 课程详情
 router.get('/courses/:id', async (ctx) => {
   const course_id = ctx.params.id
   const res = await query(`SELECT * FROM course_list WHERE id = ${course_id}`);
@@ -35,6 +36,14 @@ router.get('/courses/:id', async (ctx) => {
     courseRate: course_rate
   }
   ctx.response.body = response;
+})
+
+// 获取课程相关资料
+router.get('/resource/:id', async (ctx) => {
+  const course_id = ctx.params.id
+  const res = await query(`SELECT * FROM resource_filelists WHERE course_id = ${course_id}`)
+  // console.log(res)
+  ctx.response.body = parse(res)
 })
 
 router.put('/courses', async (ctx) => {

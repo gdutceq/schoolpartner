@@ -142,9 +142,18 @@ router.post('/resource/upload', async (ctx) => {
    const upStream = fs.createWriteStream(filePath);
    // 可读流通过管道写入可写流
    reader.pipe(upStream);
+
+   const index = (file.name).lastIndexOf(".")
+   const ext = (file.name).substr(index+1)
+
+   function formatBytes(a, b) { 
+      if (0 == a) return "0 B"; 
+      var c = 1024, d = b || 2, e = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"], f = Math.floor(Math.log(a) / Math.log(c)); 
+      return parseFloat((a / Math.pow(c, f)).toFixed(d)) + " " + e[f];
+    }
    // 插入数据库(这里插入不能省略数据库表的列名)
    await query(`INSERT INTO resource_filelists(course_id, resource_name, resource_type, resource_size, publish_date, resource_author, course_name)
-    VALUES('${Number(course_id)}','${file.name}','${file.name}','${(file.size).toString()}','${publish_date.toString()}','${resource_author}','${course_name}')
+    VALUES('${Number(course_id)}','${file.name}','${ext}','${formatBytes(file.size).toString()}','${publish_date.toString()}','${resource_author}','${course_name}')
     ON DUPLICATE KEY UPDATE course_id='${course_id}', publish_date='${publish_date.toString()}', resource_author='${resource_author}'
    `)
 

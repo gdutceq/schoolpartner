@@ -4,5 +4,6 @@ export interface CourseInfo {
   courseViews: number,
   courseDescription: string,
   courseSteps: Array<object>,
-  courseRate: number
+  courseRate: number,
+  fileLists:Array<object>
 }
