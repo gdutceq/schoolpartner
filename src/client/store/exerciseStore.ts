@@ -111,7 +111,7 @@ class exerciseStore {
     }
     this.optionStatus[number][index] = this.optionStatus[number][index] === 1 ? 0 : 1
     this.emptyPage = this.optionStatus.findIndex((answer) => answer.every(option => option === 0));
-    debugger
+    // debugger
     this.isFinished = this.emptyPage === -1
 
   }

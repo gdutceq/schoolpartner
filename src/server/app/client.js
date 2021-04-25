@@ -18,6 +18,7 @@ const {
   websocket,
   login,
   classes,
+  schedule,
   upload
 } = require('../routes/client')
 
@@ -38,6 +39,7 @@ client.use(routes(router, {
   forum,
   login,
   classes,
+  schedule,
   upload
 }))
 client.ws.use(websocket());

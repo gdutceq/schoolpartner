@@ -90,7 +90,7 @@ class Index extends Component<IProps, IState> {
 
   switchTab(index: number): void {
     const navigationTitle: Array<string> = [
-      '首页', '聊天室', '对战', '论坛', '个人中心'
+      '首页', '聊天室', '论坛', '个人中心'
     ]
     this.setState({ current: index })
     Taro.setNavigationBarTitle({ title: navigationTitle[index] })
@@ -102,9 +102,9 @@ class Index extends Component<IProps, IState> {
       <View className='index-container'>
         {current === 0 ? <Study />
           : current === 1 ? <Contacts />
-            : current === 2 ? <Game />
-              : current === 3 ? <ForumList />
-                : current === 4 ? <DashBoard />
+            // : current === 2 ? <Game />
+              : current === 2 ? <ForumList />
+                : current === 3 ? <DashBoard />
                   : null}
         <Tabbar onSwitchTab={this.switchTab.bind(this)} current={current} />
       </View>

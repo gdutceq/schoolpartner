@@ -30,6 +30,9 @@ class infoStore {
       try {
         const { code } = await Taro.login()
         console.log(code)
+        // developers.weixin.qq.com/community/develop/doc/000cacfa20ce88df04cb468bc52801
+        // 4月28日24时后发布的新版本小程序，开发者调用wx.getUserInfo将不再弹出弹窗，直接返回匿名的用户个人信息
+        // 新增getUserProfile接口（基础库2.10.4版本开始支持），可获取用户头像、昵称、性别及地区信息
         const { userInfo } = await Taro.getUserInfo()
         console.log(userInfo)
         const { nickName, avatarUrl } = userInfo

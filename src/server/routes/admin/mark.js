@@ -57,6 +57,7 @@ router.get('/mark/paper', async (ctx) => {
     const {
       authorization
     } = ctx.header
+    console.log(authorization)
     const {
       classId
     } = getJWTPayload(authorization)

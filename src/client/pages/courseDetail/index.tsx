@@ -33,16 +33,27 @@ class CourseDetail extends Component<IProps, IState> {
   }
 
   handleDownloadFile(fileName: string) {
-    const filePath = `F:/ceq/前端/毕设/代码/School-Partners/public/resource-upload`+`/${fileName}`
+
+    const filePath = `http://localhost:8082/public/resource-upload/${fileName}`
+    const downloadParh = `http://localhost:8082/public/download/${fileName}`
     console.log(filePath)
     Taro.downloadFile({
       url: filePath, //仅为示例，并非真实的资源
       success: function (res) {
         // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
         if (res.statusCode === 200) {
-          debugger
-          Taro.playVoice({
-            filePath: res.tempFilePath
+          console.log(res)
+          // debugger
+          Taro.saveFile({
+            tempFilePath: res.tempFilePath,
+            // filePath: downloadParh,
+            success: (res) => {
+              console.log(res)
+              var savedFilePath = res.savedFilePath
+              Taro.showToast({
+                title: '保存成功'
+              })
+            }
           })
         }
       }

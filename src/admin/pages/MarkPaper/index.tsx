@@ -434,6 +434,7 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
 
   const handleExerciseIndexChange = async (value: SelectValue) => {
     const { classId, studentList } = await http.get(`${prefix}/mark/paper?exerciseId=${exerciseId}&exerciseIndex=${value}`)
+    debugger
     setClassId(classId)
     setExerciseIndex(+value)
     setExerciseStudentList([...studentList])
@@ -451,7 +452,7 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
     const {imgName} = await http.get(`${prefix}/mark/img?exerciseId=${exerciseId}&exerciseIndex=${exerciseIndex}&classId=${classId}`)
     if(imgName.length) {
       const imgPath = path.join(__dirname,'../../../../public/upload') + `/${imgName[0].file_name}`
-      debugger
+      // debugger
       console.log(imgPath)
       setFillImageSrc(imgPath)
     }
